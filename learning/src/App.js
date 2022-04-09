@@ -7,6 +7,7 @@ class App extends React.Component {
     super();
     this.state = {
       users: [],
+      searchKey: "",
     };
   }
 
@@ -29,11 +30,24 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <input placeholder="monster" />
+          <input
+            placeholder="search monster "
+            onChange={(e) =>
+              this.setState(() => {
+                this.setState.searchKey = e.target.value.toLocaleLowerCase();
+                return this.setState;
+              })
+            }
+          />
+
           <div>
-            {this.state.users.map((user) => (
-              <div key={user.id}>{user.name}</div>
-            ))}
+            {this.state.users
+              .filter((user) =>
+                user.name.toLowerCase().includes(this.state.searchKey)
+              )
+              .map((user) => (
+                <div key={user.id}>{user.name}</div>
+              ))}
           </div>
         </header>
       </div>
